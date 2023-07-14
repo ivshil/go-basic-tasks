@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"math"
+	"go-basic-tasks/src/models"
 )
 
 func main() {
@@ -23,80 +23,54 @@ func main() {
 		"coconut": 1,
 	}
 
-	rectangle := Rectangle{
+	rectangle := models.Rectangle{
 		Width:  124,
 		Height: 351,
 	}
 
-	circle := Cyrcle{
+	circle := models.Cyrcle{
 		Radius: 34,
 	}
 
 	fmt.Println(removeDuplicates(sliceOfInt))
 	fmt.Println(countOccurrences(sliceOfStr))
 	fmt.Println(mergeMaps(mapA, mapB))
-	fmt.Println(RectArea(rectangle))
-	fmt.Println(RectPerimeter(rectangle))
-	fmt.Println(CircArea(circle))
-	fmt.Println(Circumference(circle))
+	fmt.Println(models.RectArea(rectangle))
+	fmt.Println(models.RectPerimeter(rectangle))
+	fmt.Println(models.CircArea(circle))
+	fmt.Println(models.Circumference(circle))
 	fmt.Println("Yabadabadu")
-	PrintShapeDetails(rectangle)
-	PrintShapeDetails(circle)
+	models.PrintShapeDetails(rectangle)
+	models.PrintShapeDetails(circle)
+
+	name := "Gencho"
+	fmt.Println(ReverseString(name))
+
+	person := models.Person{
+		Name:  "John Doe",
+		Age:   25,
+		Email: "johndoe@example.org",
+	}
+
+	jsonPerson := models.EncodeJSON(person)
+	fmt.Println(jsonPerson)
+	fmt.Println(models.DecodeJSON(jsonPerson))
 
 }
 
-type Shape interface {
-	Area() float64
-	Perimeter() float64
-}
-
-func PrintShapeDetails(shape Shape) {
-	fmt.Println(shape.Area())
-	fmt.Println(shape.Perimeter())
-}
-
-type Rectangle struct {
-	Width  float64
-	Height float64
-}
-
-func RectArea(r Rectangle) float64 {
-	return r.Width * r.Height
-}
-
-func RectPerimeter(r Rectangle) float64 {
-	return r.Width*2 + r.Height*2
-}
-
-func (r Rectangle) Area() float64 {
-	return r.Width * r.Height
-}
-
-func (r Rectangle) Perimeter() float64 {
-	return r.Width*2 + r.Height*2
-}
-
-type Cyrcle struct {
-	Radius float64
-}
-
-func CircArea(c Cyrcle) float64 {
-	return math.Pi * math.Pow(c.Radius, 2)
-}
-
-func Circumference(c Cyrcle) float64 {
-	return (c.Radius * 2) * math.Pi
-}
-
-func (c Cyrcle) Area() float64 {
-	return math.Pi * math.Pow(c.Radius, 2)
-}
-
-func (c Cyrcle) Perimeter() float64 {
-	return (c.Radius * 2) * math.Pi
+func ReverseString(str string) string {
+	newStr := ""
+	for i := len(str) - 1; i >= 0; i-- {
+		newStr += string([]rune(str)[i])
+	}
+	return newStr
 }
 
 func removeDuplicates(sliceOfInts []int) []int {
+
+	if len(sliceOfInts) == 0 {
+		return []int{}
+	}
 
 	newSliceOfInt := []int{}
 	newSliceOfInt = append(newSliceOfInt, sliceOfInts[0])
