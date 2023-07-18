@@ -3,10 +3,11 @@ package main
 import (
 	"fmt"
 	"go-basic-tasks/src/models"
+	"time"
 )
 
 func main() {
-	sliceOfInt := []int{1, 1, 2, 3, 1, 5, 7, 3, 5, 4, 8, 90}
+	sliceOfInt := []int{1, 1, 2, 3, 0, 5, 7, 3, 5, 4, 8, 90}
 	sliceOfStr := []string{"apple", "banana", "apple", "orange", "banana", "banana"}
 
 	mapA := map[string]int{
@@ -55,6 +56,19 @@ func main() {
 	jsonPerson := models.EncodeJSON(person)
 	fmt.Println(jsonPerson)
 	fmt.Println(models.DecodeJSON(jsonPerson))
+
+	go printMessage("Hello, World!")
+	fmt.Println("Goroutine started!")
+	time.Sleep(1 * time.Second)
+
+	fileNames := []string{"Readme.md", "main.go", "go.mod", "main_test.go", "process_tracker.go"}
+	for i := 0; i < len(fileNames); i++ {
+		go processFile(fileNames[i])
+	}
+
+	fmt.Println("Well, well, well..")
+	time.Sleep(6 * time.Second)
+	fmt.Println("End of Program")
 
 }
 
@@ -115,4 +129,14 @@ func mergeMaps(mapA map[string]int, mapB map[string]int) map[string]int {
 		}
 	}
 	return mapA
+}
+
+func printMessage(str string) {
+	fmt.Println(str)
+}
+
+func processFile(fileName string) {
+	time.Sleep(3 * time.Second)
+	fmt.Printf("\nProcessing is being done with file: %s\n", fileName)
+	time.Sleep(2 * time.Second)
 }
